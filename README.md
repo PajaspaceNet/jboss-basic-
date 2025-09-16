@@ -13,12 +13,29 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - `deployment/` – testovací aplikace a deploy skripty
 - `configuration/` – konfigurace uživatelů a serveru
 
+<pre>
+  jboss-basics/
+├── installation/
+│   ├── README.md
+│   └── install_wildfly.sh
+├── deployment/
+│   ├── demo-app/
+│   │   ├── src/main/webapp/index.jsp
+│   │   └── pom.xml
+│   └── deploy_demo.sh
+├── configuration/
+│   ├── README.md
+│   └── add_wildfly_user.sh
+└── README.md
+</pre>
+
 ## JAK SE NASAZUJE V JBOSSU
 
 •	V WildFly / JBoss můžeš aplikaci nasadit třemi způsoby:
-1.	Kopírováním .war/.ear do složky deployments/ – WildFly ji automaticky nasadí.
-2.	Přes management konzoli – nahrát .war a kliknout Enable.
-3.	Přes CLI (jboss-cli.sh deploy) – příkazový  a ideální pro skripty nebo CI/CD.
+1.	`Kopírováním` .war/.ear do složky deployments/ – WildFly ji automaticky nasadí.
+2.	`Přes management` konzoli – nahrát .war a kliknout Enable.
+3.	`Přes CLI (jboss-cli.sh deploy)` – příkazový  a ideální pro skripty nebo CI/CD.
+
 
 
 
