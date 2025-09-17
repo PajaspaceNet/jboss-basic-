@@ -1,7 +1,7 @@
-# Microservices - Klíčové principy
+## Microservices - Klíčové principy
 
 
-<pre>
+
 | Oblast                                  | Co je důležité                                                           | Proč je to podstatné                               |
 | --------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------- |
 | Service discovery                       | Jak služby nacházejí jedna druhou (např. Consul, Eureka, Kubernetes DNS) | Služby se navzájem najdou bez pevného URL          |
@@ -13,4 +13,4 @@
 | Logging / Tracing                       | Centralizované logy, distributed tracing (ELK, Jaeger)                   | Snadné debugování a sledování requestů přes služby |
 | Data management / CQRS / Event sourcing | Oddělení čtení a zápisu, práce s eventy                                  | Lepší škálovatelnost, odolnost a konzistence dat   |
 
-</pre>
+
