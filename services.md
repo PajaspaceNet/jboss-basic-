@@ -102,11 +102,12 @@ Service A --msg--> Broker --> Service B
 - Service B může být offline – broker zprávu uloží a doručí později.
 
   Detailneji
-  <pre>
+
+ ```
   Producer (Service A)
         |
         |  Pošle zprávu (nečeká)
-        v
+        
   +-----------------+
   |   Broker        |
   |  (Fronta / RAM) |
@@ -114,16 +115,16 @@ Service A --msg--> Broker --> Service B
   +-----------------+
         |
         |  Consumer si převezme zprávu
-        v
+        
 Consumer (Service B/C)
         |
         |  Zpráva zpracována → broker označí jako doručená
-        v
+        
   +-----------------+
   |   Broker        |
-  |  Zpráva odstraněna|
+  |Zpráva odstraněna|
   +-----------------+
-</pre>
+ ```
 
 
 
