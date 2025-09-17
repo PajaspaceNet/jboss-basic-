@@ -70,7 +70,47 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 
 `undeploy` neodstraní soubor v target/, jen aplikaci ze serveru.<br>
 
+## Co je to SNAPSHOT <br>
+**SNAPSHOT** je jen součást názvu verze, žádná jiná speciální metadata ve WAR/JAR nejsou - tzn  je to jen jméno souboru a indikátor vývojové fáze<br>
+
+# SNAPSHOT vs Finální verze
+
+| Typ verze           | Příklad názvu souboru       | Co znamená                                    | Chování Mavenu/WildFly                           |
+|--------------------|----------------------------|-----------------------------------------------|-------------------------------------------------|
+| **SNAPSHOT**        | helloworld-1.0.0-SNAPSHOT.war | Vývojová/neustále se měnící verze           | Maven může při každém buildu aktualizovat, nasadit se může opakovaně, může být přepsána |
+| **Finální verze**   | helloworld-1.0.0.war       | Stabilní, hotová verze                       | Neměnná, nasazuje se jako finální artefakt, nemění se |
+
+
+Uplne presne takto
+
+# Cesta build & deploy (SNAPSHOT vs Finální)
+<pre>
+src/ # zdrojové soubory (Java, JSP, HTML, web.xml)
+└─ helloworld/
+├─ src/main/java/
+└─ src/main/webapp/
+|
+| mvn clean package
+v
+target/ # Maven build výstup
+├─ helloworld-1.0.0-SNAPSHOT.war # vývojová verze (SNAPSHOT)
+└─ helloworld-1.0.0.war # finální stabilní verze
+|
+| deploy (WildFly)
+v
+/opt/wildfly-XX/standalone/deployments/
+├─ helloworld-1.0.0-SNAPSHOT.war → běží, může být přepsaná novým buildem
+└─ helloworld-1.0.0.war → běží, stabilní, neměnná
+
+</pre>
+
+
+    
+
+.
+
   	
+
 
 
 
