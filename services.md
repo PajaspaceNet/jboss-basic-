@@ -54,6 +54,15 @@ Service A --msg--> Broker --> Service B
 | Příklad | Service A → Service B | Service A → Broker → Service B |
 | Použití | CRUD, okamžitá odpověď | notifikace, dávkové úlohy |
 
+**Decoupling** = služby jsou nezávislé → změny nebo pád jedné služby neovlivní ostatní.<br>
+**Coupling** = pevná závislost → všechny části jsou propojené a méně flexibilní.
+
+| Pojem          | Význam                                                                | Proč je důležité                          | Příklad v mikroslužbách                                                             |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Decoupling** | Oddělení/nepřímá závislost mezi částmi systému (službami nebo moduly) | Zvyšuje odolnost, škálovatelnost a údržbu | Služba A posílá zprávu do brokera → služba B ji zpracuje, A nemusí čekat na odpověď |
+| **Coupling**   | Silná závislost – změna jedné části ovlivní ostatní                   | Snižuje flexibilitu, zvyšuje riziko chyb  | Služba A přímo volá API služby B a čeká na odpověď; pokud B spadne, A nefunguje     |
+
+
 ## Par faktu
 - „REST používáme pro okamžité operace a broker pro asynchronní zpracování.“
 - „Broker nám zajišťuje nezávislost služeb a odolnost vůči chybám.“
