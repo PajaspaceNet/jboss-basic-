@@ -1,3 +1,18 @@
+# Services v microeservicech
+
+## Jeste nez zacnem co se casto plete a hodne casto se to vytahuje 
+
+
+| Vlastnost      | Linux služby (OS)          | Mikroservisy                           |
+| -------------- | -------------------------- | -------------------------------------- |
+| Izolace        | Společný OS, menší izolace | Každá služba izolovaná (container)     |
+| Komunikace     | IPC, sockety, soubory      | HTTP, gRPC, message broker             |
+| Deployment     | OS-level start/stop        | Container/orchestrátor, CI/CD          |
+| Škálovatelnost | Omezená                    | Velmi flexibilní, horizontální scaling |
+| Databáze       | Sdílené nebo systémové     | Každá služba vlastní databázi          |
+
+* Detailni vysvetleni uplne na konci ... <br>
+- ted vzhuru do Microservicu
 
 # REST vs Message Broker
 
@@ -117,7 +132,46 @@ Některé brokery (např. Kafka) umožňují zprávy uchovávat dlouhodobě, ale
 ---
 
 
+## Detailni rozdeleni service v OS Linux a service v Microservicech <br>
 
+## Služby v Linuxu (OS level)
+
+Co to je: procesy, démoni, služby operačního systému<br>
+
+**Příklad:** <br>
+
+systemd služby (např. nginx.service, sshd.service)<br>
+Cron jobs, databázové démony (postgresql.service)<br>
+Správa: pomocí systemctl start/stop/status, service<br>
+
+**PřCharakter:** Př<br>
+
+Monolitický kontext OS – běží jako jeden proces nebo skupina procesů<br>
+Komunikace většinou přes sockety, soubory, IPC<br>
+
+2️⃣ **Služby v mikroservisní architektuře<br>**
+
+**Co to je**: samostatné aplikace/služby, které komunikují přes síť (HTTP, gRPC, message broker)<br>
+
+**Příklad:<br>**
+
+UserService → správa uživatelů<br>
+OrderService → správa objednávek<br>
+
+**NotificationService → posílá emaily/push notifikace<br>**
+
+**Správa:<br>**
+
+Docker kontejnery (docker run, docker-compose)
+Orchestrátory (Kubernetes, OpenShift)
+
+**Charakter**:
+
+**Každá služba je nezávislá, má vlastní databázi nebo zdroje<br>**
+
+Komunikace je většinou REST, gRPC, message broker<br>
+
+**Lze škálovat a deployovat samostatně<br>**
 
 
 
