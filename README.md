@@ -27,7 +27,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 │   ├── README.md
 │   └── add_wildfly_user.sh
 └── README.md
-└── services.md  #  synchronich a asynchroni sluzby
+└── services.md  #  synchroni a asynchroni sluzby
 </pre>
 
 ## JAK SE NASAZUJE V JBOSSU
@@ -36,6 +36,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 1.	`Kopírováním` .war/.ear do složky deployments/ – WildFly ji automaticky nasadí.
 2.	`Přes management` konzoli – nahrát .war a kliknout Enable.
 3.	`Přes CLI (jboss-cli.sh deploy)` – příkazový  a ideální pro skripty nebo CI/CD.
+
 
 
 
