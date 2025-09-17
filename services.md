@@ -91,4 +91,26 @@ Není to místo pro dlouhodobé ukládání dat – na to jsou databáze.<br>
 Některé brokery (např. Kafka) umožňují zprávy uchovávat dlouhodobě, ale stále primárně pro streamy / eventy, ne jako klasickou databázi.
 
 
+# Message Brokers typy 
+
+* Jednodušší: RabbitMQ → snadné pochopení a nasazení.
+* Velké datové toky: Kafka → standard pro streamy.
+* Cloud-native / serverless: SQS nebo NATS → rychlé, spravované.
+
+| Broker         | Typ                   | Použití                                     | Výhody                                                | Nevýhody                         |
+| -------------- | --------------------- | ------------------------------------------- | ----------------------------------------------------- | -------------------------------- |
+| RabbitMQ       | Message Queue (AMQP)  | Klasické fronty, mikroservisy               | Jednoduché, spolehlivé, routing, persistentní fronty  | Menší výkon pro high-throughput  |
+| Apache Kafka   | Event streaming / log | Real-time streaming, event-driven arch.     | Vysoký výkon, škálovatelné, zprávy lze uchovat dlouho | Složitější nasazení, správa      |
+| ActiveMQ       | Message Queue (JMS)   | Enterprise aplikace, integrace systémů      | Podpora JMS, spolehlivé doručení, persistentní        | Starší technologie, méně moderní |
+| Amazon SQS/SNS | Cloud queue / pub-sub | Cloudové aplikace, serverless, mikroservisy | Spravované, škálovatelné, jednoduché nasazení         | Závislost na AWS, náklady        |
+| NATS           | Lightweight pub-sub   | Rychlé messagingy, IoT, mikroservisy        | Jednoduchý, rychlý, nízká latence, cloud-native       | Menší ekosystém a funkcionality  |
+
+---
+
+
+
+
+
+
+
 
