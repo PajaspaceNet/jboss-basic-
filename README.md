@@ -61,7 +61,17 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 | **4. Běh aplikace**          | WildFly spouští aplikaci, dostupná přes prohlížeč         | běží v serveru, nezávisle na `target/`                                           | Otevřeš např.: `http://localhost:8080/helloworld`                                                                                                                                                                     |
 | **5. Odstranění (undeploy)** | Aplikace je odstraněna ze serveru                         | WAR může zůstat v `target/` (není problém), ale server ji odstraní z deployments | a) Ručně: `rm /opt/wildfly-XX/standalone/deployments/helloworld.war` <br> b) Maven: `mvn wildfly:undeploy` <br> c) CLI: `/opt/wildfly-XX/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"`              |
 
+
+**Poznámky**
+
+`target/` vzniká při Maven buildu (package) – před tím složka není.<br>
+
+`WAR` v target/ je kopie připravená k deployi, server si ji buď rozbalí, nebo nasadí přímo.<br>
+
+`undeploy` neodstraní soubor v target/, jen aplikaci ze serveru.<br>
+
   	
+
 
 
 
