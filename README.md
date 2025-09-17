@@ -35,11 +35,12 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 
 ## JAK SE NASAZUJE V JBOSSU
 
-•	V WildFly / JBoss můžeš aplikaci nasadit třemi způsoby:
+•	V WildFly / JBoss můžeš aplikaci nasadit několika způsoby:
 1.	`Kopírováním` .war/.ear do složky deployments/ – WildFly ji automaticky nasadí.
 2.	`Přes management` konzoli – nahrát .war a kliknout Enable.
 3.	`Přes CLI (jboss-cli.sh deploy)` – příkazový  a ideální pro skripty nebo CI/CD.
 4.	Nebo prez vlastni tool
+
 
 
 
