@@ -17,6 +17,48 @@
 * Detailni vysvetleni uplne na konci ... <br>
 - ted vzhuru do Microservicu
 
+
+### Tipy zprav ktere se prenaseji 
+
+
+**Eventy →** „co se stalo“ (asynchronní) ,asynchronní, loosely coupled, pro informování ostatních služeb
+
+**Command →** „udělej tohle“ (asynchronní nebo synchronní),instrukce, někdy asynchronní, když služba má vykonat konkrétní akci
+
+**Request/Response** → „dej mi data“ (synchronní) ,když potřebuješ okamžitou odpověď
+
+**Event-sourced data** → historie a audit (persistentní, někdy dlouhodobě uchované),
+
+**Většinou REST** volání dělá request/response, **Broker** řeší **eventy a commandy**, a **kombinací** toho se staví škálovatelné mikroservisy.
+
+ 
+
+# Mikroservisy – Typy zpráv
+
+| Typ zprávy                    | Popis / Kdy použít                                            | Příklad                                                  |
+| ----------------------------- | ------------------------------------------------------------- | -------------------------------------------------------- |
+| Event (událost)               | Notifikace, že se něco stalo; asynchronní                     | "Nový uživatel se zaregistroval", "Objednávka dokončena" |
+| Command (příkaz)              | Instrukce, aby služba něco provedla; asynchronní i synchronní | "Vytvoř fakturu pro tuto objednávku", "Odešli email"     |
+| Request/Response              | Žádost o data nebo výsledek; synchronní                       | "Dej mi informace o uživateli podle ID"                  |
+| Event-sourced data / snapshot | Historie změn, audit; persistentní, dlouhodobé                | "Změny stavu objednávky", "Historie inventáře"           |
+| Notification                  | Jednosměrné zprávy pro informování služeb nebo uživatelů      | "Nová zpráva v chatu", "Systémová notifikace"            |
+| Heartbeat / Health check      | Stav služby, udržuje orchestrátory informované                | "Jsem online", "Kontrola dostupnosti služby"             |
+
+## Tipy k použití
+
+* **Eventy →** asynchronní, loosely coupled, pro informování ostatních služeb
+* **Command →** instrukce, někdy asynchronní, když služba má vykonat konkrétní akci
+* **Request/Response →** synchronní, když potřebuješ okamžitou odpověď
+* **Event-sourced / snapshot →** historie a audit, CQRS, reporting
+* **Notification →** jednosměrné zprávy, ideální pro UI nebo uživatelské upozornění
+* **Heartbeat →** monitoring dostupnosti služeb
+
+
+
+
+
+
+
 # REST vs Message Broker
 
 * REST → volání a čekání na odpověď.
