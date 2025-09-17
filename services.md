@@ -1,5 +1,8 @@
 
-# Meetingový tahák: REST vs Message Broker
+# REST vs Message Broker
+
+* REST → volání a čekání na odpověď.
+* Broker → pošlu zprávu a pokračuji, zpracování proběhne později.
 
 ## REST (synchronní)
 <pre>
@@ -7,11 +10,38 @@ Service A --HTTP--> Service B
 Service A <--HTTP-- Service B
 </pre>
 
+<pre>
++-----------+        HTTP Request         +-----------+
+| Service A | -------------------------> | Service B |
+| (caller)  | <------------------------- | (responder) |
++-----------+        HTTP Response       +-----------+
+</pre>
+
+- Service A čeká, až Service B odpoví.
+- Pokud Service B není dostupná, volání selže.
+
+
 ## Message Broker (asynchronní)
 <pre>
 Service A --msg--> Broker --> Service B
 (Service A pokračuje hned)
 </pre>
+<pre>
++-----------+        Publish Message      +------------+
+| Service A | -------------------------> |  Broker    |
+| (producer)|                               | (queue)    |
++-----------+                               +------------+
+                                               |
+                                               v
+                                         +-----------+
+                                         | Service B |
+                                         | (consumer)|
+                                         +-----------+
+</pre>
+- Service A nečeká na zpracování – broker doručí zprávu, až Service B zpracuje.
+- Service B může být offline – broker zprávu uloží a doručí později.
+
+
 
 ## Tabulka vlastností
 
