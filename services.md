@@ -58,3 +58,37 @@ Service A --msg--> Broker --> Service B
 - „REST používáme pro okamžité operace a broker pro asynchronní zpracování.“
 - „Broker nám zajišťuje nezávislost služeb a odolnost vůči chybám.“
 - „Služby jsou oddělené, komunikují přes fronty a eventy.“
+
+
+## Kde Broker drzi zpravy 
+
+* Uchovávání zpráv v brokeru
+* Interní úložiště brokera
+
+* Broker má vlastní úložiště – fronty, logy, paměť + disk.
+* Není to databáze – slouží jen k doručení zpráv mezi službami.
+* Trvalé ukládání dat patří do databází, broker je spíš „poštovní schránka“ mezi službami. 
+
+### Každý message broker má svůj vlastní mechanismus pro uchování zpráv.
+
+Např.:
+
+**RabbitMQ** – zprávy se ukládají do front (queues), které jsou v paměti a/nebo na disku.
+
+**Kafka** – zprávy se zapisují do logů na disku, každá zpráva má offset a může být uchována delší dobu.
+
+Paměť vs. Disk
+
+**Lehké zprávy** často zůstávají v paměti (rychlejší doručení).
+
+Pro spolehlivost se zprávy zapisují i na disk – pokud by broker spadl, po restartu se doručení obnoví.<br>
+
+**Dočasné vs. trvalé uložení**
+
+Broker zprávu typicky drží jen dokud není doručena všem odběratelům.<br>
+Není to místo pro dlouhodobé ukládání dat – na to jsou databáze.<br>
+<br>
+Některé brokery (např. Kafka) umožňují zprávy uchovávat dlouhodobě, ale stále primárně pro streamy / eventy, ne jako klasickou databázi.
+
+
+
