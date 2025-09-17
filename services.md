@@ -2,6 +2,9 @@
 
 ## Jeste nez zacnem co se casto plete a hodne casto se to vytahuje 
 
+**Linux služby** = OS-level, demonické procesy<br>
+**Mikroservisy** = samostatné, nezávislé služby na síti, často v kontejnerech<br>
+
 
 | Vlastnost      | Linux služby (OS)          | Mikroservisy                           |
 | -------------- | -------------------------- | -------------------------------------- |
