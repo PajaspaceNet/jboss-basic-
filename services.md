@@ -101,6 +101,30 @@ Service A --msg--> Broker --> Service B
 - Service A nečeká na zpracování – broker doručí zprávu, až Service B zpracuje.
 - Service B může být offline – broker zprávu uloží a doručí později.
 
+  Detailneji
+  <pre>
+  Producer (Service A)
+        |
+        |  Pošle zprávu (nečeká)
+        v
+  +-----------------+
+  |   Broker        |
+  |  (Fronta / RAM) |
+  |  Zpráva aktivní |
+  +-----------------+
+        |
+        |  Consumer si převezme zprávu
+        v
+Consumer (Service B/C)
+        |
+        |  Zpráva zpracována → broker označí jako doručená
+        v
+  +-----------------+
+  |   Broker        |
+  |  Zpráva odstraněna|
+  +-----------------+
+</pre>
+
 
 
 ## Tabulka vlastností
