@@ -30,7 +30,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 │   └── add_wildfly_user.sh
 └── README.md
 └── services.md  #  synchroni a asynchroni sluzby
-└── key_princips_a_osetrovani microservisu.m  klicove principy a osetrovani microservicu
+└── key_princips_a_osetrovani microservisu.md # klicove principy a osetrovani microservicu
 </pre>
 
 ## JAK SE NASAZUJE V JBOSSU
@@ -40,6 +40,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 2.	`Přes management` konzoli – nahrát .war a kliknout Enable.
 3.	`Přes CLI (jboss-cli.sh deploy)` – příkazový  a ideální pro skripty nebo CI/CD.
 4.	Nebo prez vlastni tool
+
 
 
 
