@@ -2,11 +2,14 @@
 
 Tento repozitář slouží k nácviku a demonstraci základních operací s WildFly/JBoss:
 
-- Instalace serveru
+- Instalace serveru 
 - Konfigurace uživatele a portů
 - Deploy testovací Java aplikace (`demo-app.war`)
+- Deploy ap;ikaci obecne na Jboss/Wildfly
 - Správa aplikací přes CLI a konzoli
-
+ - Microservices
+ - Daily Checklist Aplikacniho Admina
+   
 ## Struktura
 
 - `installation/` – skripty a návody pro instalaci
@@ -291,6 +294,7 @@ v
 .
 
   	
+
 
 
 
