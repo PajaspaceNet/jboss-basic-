@@ -70,6 +70,61 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 
 `undeploy` neodstraní soubor v target/, jen aplikaci ze serveru.<br>
 
+## Porovnani WildFLY x JBoss EAP 
+
+**WildFly** → upstream (community), používá se na vývoj a testy<br>
+**JBoss EAP (Red Hat)** → downstream (enterprise), používá se v produkci<br>
+
+<pre>
+ Upstream (WildFly)
+         +------------------+
+         |  Nejnovější kód  |
+         |  Nové funkce     |
+         |  Komunita        |
+         +------------------+
+                   |
+                   |  Red Hat bere kód,
+                   |  stabilizuje, testuje,
+                   v  vydává s podporou
+         Downstream (JBoss EAP)
+         +------------------+
+         |  Stabilní verze  |
+         |  Dlouhá podpora  |
+         |  Enterprise use  |
+         +------------------+
+</pre>
+
++------------------+--------------------------+----------------------------+
+|                  | WildFly (community)      | JBoss EAP (Red Hat)        |
++------------------+--------------------------+----------------------------+
+| Plugin           | wildfly-maven-plugin     | jboss-as-maven-plugin      |
+| Příkaz           | mvn wildfly:deploy       | mvn jboss-as:deploy        |
+| Port mgmt.       | 9990 (management)        | 9999 (management - starší) |
+| Artefakt         | helloworld-1.0.0.war     | helloworld-1.0.0.war       |
+| Nasazení ručně   | cp target/*.war          | cp target/*.war            |
+|                  |   -> standalone/deploy   |   -> standalone/deploy     |
+| Podpora          | Komunita (upstream)      | Red Hat (enterprise)       |
++------------------+--------------------------+----------------------------+
+
+
+
++----------------+--------------------------+----------------------------+
+| Fáze           | Testovací prostředí      | Produkční prostředí        |
++----------------+--------------------------+----------------------------+
+| Server         | WildFly (community)      | JBoss EAP (Red Hat)        |
+| Build          | mvn clean package        | (artefakt se NEMĚNÍ)       |
+| Deploy plugin  | mvn wildfly:deploy       | mvn jboss-as:deploy        |
+| Ruční deploy   | cp target/*.war          | cp target/*.war            |
+| Účel           | Vývoj, testování, QA     | Stabilní provoz, podpora   |
++----------------+--------------------------+----------------------------+
+
+
+        
+
+
+
+
+
 ## Co je to SNAPSHOT <br>
 **SNAPSHOT** je jen součást názvu verze, žádná jiná speciální metadata ve WAR/JAR nejsou - tzn  je to jen jméno souboru a indikátor vývojové fáze<br>
 
@@ -110,6 +165,7 @@ v
 .
 
   	
+
 
 
 
