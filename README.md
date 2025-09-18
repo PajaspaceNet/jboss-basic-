@@ -203,12 +203,93 @@ v
 
 </pre>
 
+## Zaverecne zjednoduseni prubeh od kodu az po nasazeni na server v produkci
+
+<table style="border-collapse: collapse; width: 100%;">
+  <tr style="background-color: #f2f2f2;">
+    <th style="border: 1px solid #ddd; padding: 8px;">Krok / Fáze</th>
+    <th style="border: 1px solid #ddd; padding: 8px;">Testovací prostředí</th>
+    <th style="border: 1px solid #ddd; padding: 8px;">Produkční prostředí</th>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>1. Zdrojové soubory</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      src/main/java/<br/>
+      src/main/webapp/<br/>
+      WEB-INF/<br/>
+      Píšeš kód, JSP, HTML
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px;">stejné jako v testu</td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>2. Build</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      mvn clean package<br/>
+      Vytvoří target/*.war<br/>
+      SNAPSHOT pro testy
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Build už proběhl (stejný .war), Finální verze pro produkci</td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>3. Deploy</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      WildFly<br/>
+      Plugin: wildfly-maven-plugin<br/>
+      Příkaz: mvn wildfly:deploy<br/>
+      Ručně: cp target/*.war -> standalone/deploy<br/>
+      Port: 9990
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      JBoss EAP<br/>
+      Plugin: jboss-as-maven-plugin<br/>
+      Příkaz: mvn jboss-as:deploy<br/>
+      Ručně: cp target/*.war -> standalone/deploy<br/>
+      Port: 9999 (management)
+    </td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>4. Běh aplikace</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      Otevření v prohlížeči<br/>
+      http://localhost:8080
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      Otevření v produkčním prohlížeči<br/>
+      http://prod-server:8080
+    </td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>5. Odstranění (undeploy)</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      mvn wildfly:undeploy<br/>
+      nebo rm standalone/deployments/*.war
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      mvn jboss-as:undeploy<br/>
+      nebo rm standalone/deployments/*.war
+    </td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>6. Poznámky</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">SNAPSHOT = vývojová verze, může se přepsat</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Finální verze, stabilní artefakt</td>
+  </tr>
+</table>
+
+
 
     
 
 .
 
   	
+
 
 
 
