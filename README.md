@@ -17,7 +17,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - `configuration/` – konfigurace uživatelů a serveru
 - `services.md`  #  synchroni a asynchroni sluzby , vysvetleni
 - `key_princips_a_osetrovani microservisu.md`  klicove principy a sprava microservicu
-- checklist-applic-admin.md - checklist a denni kontroly
+- `checklist-applic-admin.md` - checklist a denni kontroly
 
 <pre>
   jboss-basics/
@@ -294,6 +294,7 @@ v
 .
 
   	
+
 
 
 
