@@ -14,6 +14,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - `configuration/` – konfigurace uživatelů a serveru
 - `services.md`  #  synchroni a asynchroni sluzby , vysvetleni
 - `key_princips_a_osetrovani microservisu.md`  klicove principy a sprava microservicu
+- checklist-applic-admin.md - checklist a denni kontroly
 
 <pre>
   jboss-basics/
@@ -28,9 +29,10 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 ├── configuration/
 │   ├── README.md
 │   └── add_wildfly_user.sh
-└── README.md
+└── README.md # instalace jak instalovat ,HOWTOs
 └── services.md  #  synchroni a asynchroni sluzby
 └── key_princips_a_osetrovani microservisu.md # klicove principy a osetrovani microservicu
+└──   checklist-applic-admin.md # denni check list application admina
 </pre>
 
 ## JAK SE NASAZUJE a ODSTRANUJE V JBOSSU
@@ -289,6 +291,7 @@ v
 .
 
   	
+
 
 
 
