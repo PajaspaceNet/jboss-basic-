@@ -47,19 +47,58 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
   	/opt/wildfly-XX/bin/jboss-cli.sh --connect --command="deploy /cesta/k/helloworld.war"
     </pre>
     **Odstraneni prez CLI**
-    <pre>  
+      
   	/opt/wildfly-XX/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"
-    </pre>
+    
 
    PREHLEDNE V TABULCE <br>
 
-| Krok                         | Co se děje                                                | Kde/Co vzniká                                                                    | Jak se aplikuje/odstraňuje                                                                                                                                                                                            |
-| ---------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Zdrojové soubory**      | Píšeš Java třídy, JSP, HTML, CSS, konfigurace (`web.xml`) | `src/main/java/`, `src/main/webapp/`, `WEB-INF/`                                 | Je to výchozí obsah projektu, zatím není spustitelné                                                                                                                                                                  |
-| **2. Maven build**           | Spuštění `mvn clean package`                              | Maven zkompiluje třídy, zabalí soubory do WAR a uloží do `target/`               | `target/helloworld.war` – hotová aplikace připravená k nasazení                                                                                                                                                       |
-| **3. Deploy (nasazení)**     | Aplikace je nasazena na WildFly                           | WAR soubor je rozbalen WildFly v runtime (paměť + `standalone/deployments/`)     | a) Ručně: `cp target/helloworld.war /opt/wildfly-XX/standalone/deployments/` <br> b) Maven: `mvn wildfly:deploy` <br> c) CLI: `/opt/wildfly-XX/bin/jboss-cli.sh --connect --command="deploy /cesta/k/helloworld.war"` |
-| **4. Běh aplikace**          | WildFly spouští aplikaci, dostupná přes prohlížeč         | běží v serveru, nezávisle na `target/`                                           | Otevřeš např.: `http://localhost:8080/helloworld`                                                                                                                                                                     |
-| **5. Odstranění (undeploy)** | Aplikace je odstraněna ze serveru                         | WAR může zůstat v `target/` (není problém), ale server ji odstraní z deployments | a) Ručně: `rm /opt/wildfly-XX/standalone/deployments/helloworld.war` <br> b) Maven: `mvn wildfly:undeploy` <br> c) CLI: `/opt/wildfly-XX/bin/jboss-cli.sh --connect --command="undeploy helloworld.war"`              |
+<table style="border-collapse: collapse; width: 100%;">
+  <tr style="background-color: #f2f2f2;">
+    <th style="border: 1px solid #ddd; padding: 8px;">Krok</th>
+    <th style="border: 1px solid #ddd; padding: 8px;">Co se děje</th>
+    <th style="border: 1px solid #ddd; padding: 8px;">Kde/Co vzniká</th>
+    <th style="border: 1px solid #ddd; padding: 8px;">Jak se aplikuje/odstraňuje</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>1. Zdrojové soubory</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Píšeš Java třídy, JSP, HTML, CSS, konfigurace (<code>web.xml</code>)</td>
+    <td style="border: 1px solid #ddd; padding: 8px;"><code>src/main/java/</code>, <code>src/main/webapp/</code>, <code>WEB-INF/</code></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Výchozí obsah projektu, zatím není spustitelné</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>2. Maven build</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Spuštění <code>mvn clean package</code></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Maven zkompiluje třídy, zabalí do WAR a uloží do <code>target/</code></td>
+    <td style="border: 1px solid #ddd; padding: 8px;"><code>target/helloworld.war</code> – hotová aplikace připravená k nasazení</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>3. Deploy (nasazení)</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Aplikace je nasazena na WildFly</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">WAR soubor je rozbalen WildFly v runtime (<code>standalone/deployments/</code>)</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      <b>Ručně:</b> <code>cp target/helloworld.war /opt/wildfly-XX/standalone/deployments/</code><br/>
+      <b>Maven:</b> <code>mvn wildfly:deploy</code><br/>
+      <b>CLI:</b> <code>jboss-cli.sh --connect --command="deploy /cesta/k/helloworld.war"</code>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>4. Běh aplikace</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">WildFly spouští aplikaci, dostupná přes prohlížeč</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">běží v serveru, nezávisle na <code>target/</code></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Otevřeš např.: <code>http://localhost:8080/helloworld</code></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;"><b>5. Odstranění (undeploy)</b></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">Aplikace je odstraněna ze serveru</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">WAR může zůstat v <code>target/</code>, ale server ji odstraní z deployments</td>
+    <td style="border: 1px solid #ddd; padding: 8px;">
+      <b>Ručně:</b> <code>rm /opt/wildfly-XX/standalone/deployments/helloworld.war</code><br/>
+      <b>Maven:</b> <code>mvn wildfly:undeploy</code><br/>
+      <b>CLI:</b> <code>jboss-cli.sh --connect --command="undeploy helloworld.war"</code>
+    </td>
+  </tr>
+</table>
 
 
 **Poznámky**
@@ -94,6 +133,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
          +------------------+
 </pre>
 
+<pre>
 +------------------+--------------------------+----------------------------+
 |                  | WildFly (community)      | JBoss EAP (Red Hat)        |
 +------------------+--------------------------+----------------------------+
@@ -105,9 +145,9 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 |                  |   -> standalone/deploy   |   -> standalone/deploy     |
 | Podpora          | Komunita (upstream)      | Red Hat (enterprise)       |
 +------------------+--------------------------+----------------------------+
+</pre>
 
-
-
+<pre>
 +----------------+--------------------------+----------------------------+
 | Fáze           | Testovací prostředí      | Produkční prostředí        |
 +----------------+--------------------------+----------------------------+
@@ -117,7 +157,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 | Ruční deploy   | cp target/*.war          | cp target/*.war            |
 | Účel           | Vývoj, testování, QA     | Stabilní provoz, podpora   |
 +----------------+--------------------------+----------------------------+
-
+</pre>
 
         
 
@@ -134,6 +174,10 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 |--------------------|----------------------------|-----------------------------------------------|-------------------------------------------------|
 | **SNAPSHOT**        | helloworld-1.0.0-SNAPSHOT.war | Vývojová/neustále se měnící verze           | Maven může při každém buildu aktualizovat, nasadit se může opakovaně, může být přepsána |
 | **Finální verze**   | helloworld-1.0.0.war       | Stabilní, hotová verze                       | Neměnná, nasazuje se jako finální artefakt, nemění se |
+
+
+</pre>
+
 
 
 Uplne presne takto
@@ -165,6 +209,7 @@ v
 .
 
   	
+
 
 
 
