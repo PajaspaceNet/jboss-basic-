@@ -120,3 +120,126 @@ Když nasadíš aplikaci a chceš, aby se uživatelé přihlašovali<br>
 firemním jménem a heslem, nastavíš v JBossu security domain nebo<br>
 Elytron, který se napojí na LDAP/Active Directory<br>
 
+---
+
+## Conection pool 
+
+<pre>
+[ Aplikace / request ]
+          |
+          v
+   [ Connection Pool ] --(není volno)--> čekání podle acquire-timeout
+          |
+          v
+    [ DB spojení ] <-> [ Databáze ]
+          |
+          v
+   vrácení do poolu  (nezapomeň close() / u managed DS řeší kontejner)
+
+
+</pre>
+
+
+
+| Pojem / parametr                           | Co znamená                             | Proč je důležité                                  | Poznámka / příklad                                       |
+| ------------------------------------------ | -------------------------------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| **Pool**                                   | Sdílená sada otevřených DB spojení     | Šetří čas (neotvírá se spojení při každém dotazu) | V JBossu konfiguruješ v datasource                       |
+| **min-pool-size**                          | Minimální počet otevřených spojení     | Zahřejí pool, rychlé první requesty               | Např. 5                                                  |
+| **max-pool-size**                          | Maximální počet spojení v poolu        | Limituje paralelismus a zátěž DB                  | Např. 20–50 dle DB a zátěže                              |
+| **acquire-timeout / blocking-timeout**     | Jak dlouho čekat na volné spojení      | Zabraňuje nekonečnému čekání                      | Např. 30 s                                               |
+| **idle-timeout**                           | Jak dlouho může být spojení nečinné    | Čistí neaktivní spojení                           | Např. 5–15 min                                           |
+| **validation**                             | Ověření, že spojení je živé            | Zabraňuje předávání mrtvých spojení aplikaci      | `check-valid-connection-sql` nebo validátor driveru      |
+| **test-on-borrow / background-validation** | Kdy se validuje spojení                | Na půjčení vs. periodicky na pozadí               | Background méně zatěžuje request                         |
+| **validation-query**                       | SQL pro ověření spojení                | Musí být levné a vždy platné                      | Oracle: `SELECT 1 FROM DUAL`, Postgres/MySQL: `SELECT 1` |
+| **leak-detection**                         | Detekce úniků (neuzavřených) spojení   | Pomáhá najít místa bez `close()`                  | Loguje stacktrace držitele spojení                       |
+| **prepared-statement-cache**               | Cache prepared statements na připojení | Zrychluje opakované dotazy                        | Nastavit velikost dle aplikace                           |
+| **transaction-isolation**                  | Izolační úroveň transakcí              | Ovlivňuje zámky/konflikty/konzistenci             | Default DB (často READ COMMITTED)                        |
+| **auto-commit**                            | Automatický commit po každém dotazu    | Většinou vypnuto v řízených transakcích (JTA)     | Spravuje kontejner                                       |
+| **pool-strategy**                          | Jak se vytváří/ničí spojení            | Může být „prefill“, „on-demand“                   | Prefill = rychlý start, vyšší nároky                     |
+
+ ## Common Problemms
+
+| Problém / symptom                                 | Pravděpodobná příčina                                                              | Rychlé řešení                                                                                      |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **„Pool vyčerpán“ / time-out na získání spojení** | Příliš nízký `max-pool-size`, únik spojení (nevolá se `close()`), dlouhé DB dotazy | Zvedni `max-pool-size` (rozumně), zapni **leak detection**, zkrať pomalé dotazy, přidej indexy     |
+| **Náhodné DB chyby po nečinnosti**                | DB zavírá idle spojení, chybí validace                                             | Nastav `background-validation` a `validation-query`, případně `idle-timeout`                       |
+| **„Stale/closed connection“**                     | Spojení umřelo mezi půjčením a použitím                                            | Zapni `test-on-borrow` nebo krátký `background-validation` interval                                |
+| **Pomalé requesty při špičce**                    | Malý pool, velké „spiky“, dlouhé transakce                                         | Optimalizuj dotazy, zkrať transakce, zvaž vyšší `max-pool-size` a větší `prepared-statement-cache` |
+| **Zámky / deadlocky**                             | Dlouhé transakce, nevhodná izolační úroveň                                         | Zkrať transakce, přepni izolaci (např. na READ COMMITTED), reviduj pořadí update tabulek           |
+| **Časté reconnecty**                              | Krátký `idle-timeout`, agresivní firewall/DB timeout                               | Slaď `idle-timeout` s DB, zapni background validation                                              |
+| **Vysoká zátěž DB**                               | Příliš velký pool nebo chybějící limity na dotazy                                  | Sniž `max-pool-size`, optimalizuj SQL, rate-limit batch úlohy                                      |
+| **„Too many open cursors“ (Oracle)**              | Malý limit kurzorů nebo bezhlavé statementy bez close                              | Zvyšit DB limit, používat prepared statements a správně zavírat                                    |
+| **„Connection leak suspected“ v logu**            | Aplikace neuzavírá spojení ve všech cestách                                        | Všude `try/finally` (`try-with-resources`), log z leak-detektoru použij na fix                     |
+| **Flapping validace (falešné chyby)**             | Těžká `validation-query` / nestabilní síť                                          | Použij nejlevnější validaci, stabilizuj síťové parametry/timeouty                                  |
+
+
+
+
+ **datasource snippet s vysvětlivkami**
+ 👉Basic  příklad – 
+
+# Datasource – ukázková konfigurace (standalone.xml)
+
+```xml
+<subsystem xmlns="urn:jboss:domain:datasources:5.0">
+    <datasources>
+        <!-- Definice datasource -->
+        <datasource jndi-name="java:/MyDS" pool-name="MyDS_Pool" enabled="true" use-java-context="true">
+            
+            <!-- URL připojení k databázi -->
+            <connection-url>jdbc:postgresql://dbhost:5432/mydb</connection-url>
+            <driver>postgresql</driver>
+
+            <!-- Uživatelské jméno a heslo -->
+            <security>
+                <user-name>myuser</user-name>
+                <password>mypassword</password>
+            </security>
+
+            <!-- ⚙️ Pool settings: nastavení počtu spojení -->
+            <pool>
+                <min-pool-size>5</min-pool-size>           <!-- minimální počet spojení -->
+                <max-pool-size>20</max-pool-size>          <!-- maximální počet spojení -->
+                <prefill>true</prefill>                    <!-- zda se spojení vytvoří hned při startu -->
+            </pool>
+
+            <!-- ⏱️ Timeout settings: čekání a čištění -->
+            <timeout>
+                <blocking-timeout-millis>30000</blocking-timeout-millis> <!-- max. čekání na spojení (30 s) -->
+                <idle-timeout-minutes>5</idle-timeout-minutes>           <!-- jak dlouho může být spojení nečinné -->
+            </timeout>
+
+            <!-- ✅ Validation settings: kontrola, že spojení je živé -->
+            <validation>
+                <check-valid-connection-sql>SELECT 1</check-valid-connection-sql> <!-- jednoduchý testovací SQL dotaz -->
+                <background-validation>true</background-validation>               <!-- zapnout kontrolu na pozadí -->
+                <background-validation-millis>30000</background-validation-millis> <!-- interval validace (30 s) -->
+            </validation>
+        </datasource>
+
+        <!-- 🔌 Driver definition: definice JDBC driveru -->
+        <drivers>
+            <driver name="postgresql" module="org.postgresql">
+                <driver-class>org.postgresql.Driver</driver-class>
+            </driver>
+        </drivers>
+    </datasources>
+</subsystem>
+```
+
+---
+
+### 📖 Vysvětlivky bloků
+
+* **`connection-url`** – JDBC URL k databázi (host, port, název DB).
+* **`security`** – přihlašovací údaje (pozor: v produkci často řešeno jinak – vault, credential store).
+* **`pool`** – kolik spojení se udržuje minimálně, kolik maximálně, jestli se vytvoří hned.
+* **`timeout`** – jak dlouho čeká aplikace na volné spojení, kdy se vyhazují idle spojení.
+* **`validation`** – jak se kontroluje, že spojení funguje (query `SELECT 1`), zda se dělá test při každém půjčení nebo na pozadí.
+* **`drivers`** – definice JDBC driveru, který musí být nainstalovaný jako modul v JBoss/WildFly.
+
+---
+
+
+
+
