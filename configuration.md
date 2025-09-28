@@ -164,13 +164,81 @@ Typické tabulky:
 * **user_roles**: `username`, `role`
 
 ---
+## SHrnuti 
 
 👉 Přehled obou nejčastějších možností – properties soubor pro správu a databázový realm pro aplikace.
 
 
-
-
 * **Deployments** → nasazené aplikace (WAR, EAR soubory)
+
+---
+
+
+ **JBoss/WildFly** (novější název) se může lišit podle verze a způsobu nasazení (standalone vs. domain mode). Obecný postup je ale zhruba takto:
+
+---
+
+### 1. Struktura aplikace
+
+* Aplikace se obvykle balí jako:
+
+  * **WAR** (pro webové aplikace),
+  * **EAR** (pokud má více modulů, např. EJB + WAR),
+  * nebo **JAR** (pokud jde o čistě EJB modul).
+* Konfigurace aplikace se dá částečně řídit pomocí souborů v `WEB-INF` (web.xml, jboss-web.xml) nebo `META-INF` (persistence.xml, jboss-deployment-descriptor.xml).
+
+---
+
+### 2. Nasazení aplikace
+
+* V **standalone režimu** se aplikace jednoduše zkopíruje do adresáře:
+
+  ```
+  $JBOSS_HOME/standalone/deployments/
+  ```
+
+  (např. `standalone/deployments/mojeapp.war`)
+* V **domain režimu** se nasazuje přes doménového kontrolera (CLI nebo konzole).
+
+---
+
+### 3. Konfigurace JBossu
+
+Aplikace často potřebuje:
+
+* **Datasource** (pro přístup k DB),
+* **JMS Queue/Topic** (pokud používá messaging),
+* **Bezpečnostní realms** (uživatelé, role, LDAP, apod.),
+* **System properties**.
+
+Tyto věci se nastavují v konfiguračních souborech JBossu:
+
+* `standalone/configuration/standalone.xml`
+* (nebo `domain/configuration/domain.xml` v domain mode).
+
+---
+
+### 4. Management konzole a CLI
+
+JBoss má dvě hlavní cesty konfigurace:
+
+* **Webová administrátorská konzole** (defaultně na `http://localhost:9990`).
+* **CLI nástroj** (`$JBOSS_HOME/bin/jboss-cli.sh`), kterým lze:
+
+  * přidat datasource,
+  * nakonfigurovat JMS,
+  * měnit system properties,
+  * provádět deployment aplikací.
+
+---
+
+### 5. Konfigurace uvnitř aplikace
+
+* Pokud potřebuješ aplikaci konfigurovat dynamicky (např. parametry DB, URL služeb), používá se často:
+
+  * **JNDI bindingy**,
+  * **Environment entries** (v `web.xml`),
+  * **System properties** (čtené přes `System.getProperty`).
 
 ---
 
