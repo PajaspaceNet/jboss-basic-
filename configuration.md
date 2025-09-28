@@ -53,6 +53,18 @@ Pokud chceš jiný soubor, dáš parametr `--server-config`, např.:
 ```bash
 $JBOSS_HOME/bin/standalone.sh --server-config=standalone-full.xml
 ```
+| Soubor / adresář                                                 | Popis                                                  | Kdy použít                                                      | Typické úpravy                                                                  |
+| ---------------------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **standalone.xml**                                               | Základní konfigurace serveru.                          | Výchozí profil při spuštění `standalone.sh`.                    | Přidání datasource, definice JNDI, úprava subsystémů (např. logging, security). |
+| **standalone-full.xml**                                          | Rozšířený profil s více subsystémy (JMS, batch, atd.). | Pokud aplikace používá messaging nebo další enterprise featury. | Konfigurace JMS front/topic, batch subsystému, rozšířených služeb.              |
+| **standalone-ha.xml / standalone-full-ha.xml**                   | Varianta pro clustering a vysokou dostupnost.          | Při nasazení více instancí JBossu do clusteru.                  | Nastavení discovery group, infinispan cache, session clustering.                |
+| **standalone-microprofile.xml / standalone-microprofile-ha.xml** | Profil s podporou MicroProfile API.                    | Pokud aplikace využívá MicroProfile (health, metrics, config).  | Konfigurace health check endpointů, metrics, config sources.                    |
+| **standalone-load-balancer.xml**                                 | Server jako load balancer (mod_cluster).               | Pokud JBoss funguje jako fronta pro jiné servery.               | Úprava mod_cluster konfigurace, worker nodes.                                   |
+| **standalone_xml_history/**                                      | Automatické zálohy konfiguračních XML.                 | Server si ukládá změny provedené přes CLI/kontrolní konzoli.    | Obnova starší konfigurace při chybě.                                            |
+| **application-users.properties / application-roles.properties**  | Uživatelé a role pro aplikace (JAAS).                  | Pokud aplikace používá `Database`/`Properties` login modul.     | Přidání uživatelů a přiřazení rolí.                                             |
+| **mgmt-users.properties / mgmt-groups.properties**               | Uživatelé a skupiny pro administraci.                  | Pro přístup do admin konzole (`http://localhost:9990`) a CLI.   | Přidání admin uživatele pomocí `add-user.sh`.                                   |
+| **application.keystore**                                         | Certifikáty pro HTTPS/TLS.                             | Pokud chceš aplikaci nebo konzoli zpřístupnit přes HTTPS.       | Import/obnova certifikátů, změna hesla keystore.                                |
+| **logging.properties**                                           | Konfigurace logování (úrovně, appendery).              | Pro nastavení formátu, úrovní a cílů logů.                      | Přidání vlastních loggerů, změna úrovně logování.                               |
 
 ---
 
