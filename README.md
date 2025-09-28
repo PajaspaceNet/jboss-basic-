@@ -10,6 +10,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
  - Microservices
  - Daily Checklist Aplikacniho Admina
  - Common Issues Jboss
+ - Termin Explanation
    
 ## Struktura
 
@@ -20,6 +21,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - `key_princips_a_osetrovani microservisu.md`  klicove principy a sprava microservicu
 - `checklist-applic-admin.md` - checklist a denni kontroly
 - `common issues` - bezne chyby a reseni
+-  `termin explanantion` - vysvetleni terminu
 
 <pre>
   jboss-basics/
@@ -39,6 +41,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 └── key_princips_a_osetrovani microservisu.md # klicove principy a osetrovani microservicu
 └──   checklist-applic-admin.md # denni check list application admina
 └──     common-issues.md - bezne chyby a jejich obecne reseni 
+ └──   TerminExplanation.md - Vysvetleni terminu
 </pre>
 
 ## JAK SE NASAZUJE a ODSTRANUJE V JBOSSU
@@ -297,6 +300,7 @@ v
 .
 
   	
+
 
 
 
