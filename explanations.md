@@ -43,6 +43,22 @@ Aplikace nebo servery (třeba i JBoss) pak přes LDAP ověřují, jestli je uži
 **CN (Common Name)** → běžné jméno, např. CN=Jan Novak<br>
 
 
+<pre>
+dn: CN=Jan Novak,OU=People,DC=firma,DC=cz
+objectClass: person
+cn: Jan Novak
+sn: Novak
+uid: jnovak
+mail: jan.novak@firma.cz
+memberOf: CN=Admins,OU=Groups,DC=firma,DC=cz
+</pre>
+
+**DN** = celá cesta k objektu<br>
+**CN** = konkrétní jméno záznamu<br>
+**OU** = složka / organizační jednotka<br>
+**DC** = doména<br>
+
+
 Jak to funguje:
 
 Active Directory / LDAP je vlastně speciální databáze.<br>
