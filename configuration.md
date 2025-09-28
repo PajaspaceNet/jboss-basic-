@@ -22,6 +22,43 @@ JBoss (WildFly) ukládá své konfigurační soubory do:
 
 Nejpoužívanější soubor je **`standalone.xml`** (nebo `domain.xml`).
 
+
+
+V adresáři JBossu (resp. WildFly) najdeš konfigurační soubory pro **standalone režim**:
+
+```
+$JBOSS_HOME/standalone/configuration/
+```
+
+Uvnitř jsou hlavně tyto soubory:
+
+* **standalone.xml** – základní konfigurace serveru (datasources, JMS, subsystémy, logging, bezpečnost).
+* **standalone-full.xml** – varianta s víc subsystémy (JMS, Clustering, atd.).
+* **standalone-ha.xml** – konfigurace pro high availability (clustering).
+* **standalone-full-ha.xml** – kombinace full + HA.
+* **standalone-load-balancer.xml** – pokud je JBoss použit jako load balancer.
+
+Typicky se používá **standalone.xml** (pokud nespouštíš server s jiným profilem).
+
+Když spustíš JBoss příkazem:
+
+```bash
+$JBOSS_HOME/bin/standalone.sh
+```
+
+→ použije se výchozí `standalone.xml`.
+
+Pokud chceš jiný soubor, dáš parametr `--server-config`, např.:
+
+```bash
+$JBOSS_HOME/bin/standalone.sh --server-config=standalone-full.xml
+```
+
+---
+
+
+
+
 ---
 
 ## Co se nastavuje v `standalone.xml`
