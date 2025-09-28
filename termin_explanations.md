@@ -1,3 +1,7 @@
+# Termin Explanation
+
+- LDAP
+
 ## LDAP
 
 👉 LDAP = Lightweight Directory Access Protocol<br>
