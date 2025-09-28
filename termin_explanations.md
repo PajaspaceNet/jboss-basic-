@@ -1,8 +1,8 @@
 # Termin Explanation
 
-# Basic Explanations – JBoss / WildFly
+### Basic Explanations – JBoss / WildFly
 
-Tento dokument shrnuje nejčastější základní pojmy, které se objevují při práci s JBoss / WildFly (EAP).  
+Shrnuti nejčastější základní pojmy, které se objevují při práci s JBoss / WildFly (EAP).  
 
 ---
 
