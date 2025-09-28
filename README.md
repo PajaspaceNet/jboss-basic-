@@ -9,6 +9,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - Správa aplikací přes CLI a konzoli
  - Microservices
  - Daily Checklist Aplikacniho Admina
+ - Common Issues Jboss
    
 ## Struktura
 
@@ -18,6 +19,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 - `services.md`  #  synchroni a asynchroni sluzby , vysvetleni
 - `key_princips_a_osetrovani microservisu.md`  klicove principy a sprava microservicu
 - `checklist-applic-admin.md` - checklist a denni kontroly
+- `common issues` - bezne chyby a reseni
 
 <pre>
   jboss-basics/
@@ -36,6 +38,7 @@ Tento repozitář slouží k nácviku a demonstraci základních operací s Wild
 └── services.md  #  synchroni a asynchroni sluzby
 └── key_princips_a_osetrovani microservisu.md # klicove principy a osetrovani microservicu
 └──   checklist-applic-admin.md # denni check list application admina
+└──     common-issues.md - bezne chyby a jejich obecne reseni 
 </pre>
 
 ## JAK SE NASAZUJE a ODSTRANUJE V JBOSSU
@@ -294,6 +297,7 @@ v
 .
 
   	
+
 
 
 
