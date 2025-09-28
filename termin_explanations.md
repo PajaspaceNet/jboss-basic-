@@ -1,6 +1,35 @@
 # Termin Explanation
 
-- LDAP
+# Basic Explanations – JBoss / WildFly
+
+Tento dokument shrnuje nejčastější základní pojmy, které se objevují při práci s JBoss / WildFly (EAP).  
+
+---
+
+| Pojem                  | Vysvětlení (stručně)                                             | Příklad použití |
+|-------------------------|------------------------------------------------------------------|-----------------|
+| **LDAP / Active Directory** | Adresářová služba, kde jsou uživatelé, skupiny, role. Přístup přes protokol LDAP. | Login do aplikace přes firemní AD. |
+| **DN / CN / OU / DC**   | Struktura LDAP: DN = cesta k objektu, CN = jméno, OU = jednotka, DC = doména. | `CN=Jan Novak,OU=People,DC=firma,DC=cz` |
+| **Connection Pool**     | Správa připojení k databázi, aby se neotvírala stále nová spojení. | Datasource v JBossu s max. 20 connections. |
+| **DataSource (JNDI)**   | Definice zdroje dat (DB) v aplikačním serveru. | `java:/MyDS` odkazující na databázi. |
+| **JNDI**                | Java Naming and Directory Interface – způsob, jak aplikace najde zdroje. | Lookup datasource nebo JMS fronty. |
+| **JMS**                 | Java Messaging Service – zprávy ve frontách nebo topics. | Asynchronní zpracování objednávek. |
+| **EJB**                 | Enterprise Java Beans – komponenty pro business logiku. | EJB session bean v aplikaci. |
+| **WAR / EAR**           | Formáty balíčků pro nasazení aplikací. | `app.war` (web), `erp.ear` (enterprise). |
+| **Deployment Descriptor** | XML konfigurace určující chování aplikace. | `web.xml`, `jboss-web.xml`. |
+| **Cluster**             | Seskupení více JBoss instancí pro škálování a HA. | Dva servery sdílející session. |
+| **Session Replication** | Replikace uživatelských session v clusteru. | Uživatel zůstane přihlášen i při výpadku 1 uzlu. |
+| **Thread Pool**         | Správa vláken pro obsluhu požadavků. | Webová aplikace zpracuje více requestů najednou. |
+| **Garbage Collection**  | Mechanismus JVM pro uvolňování paměti. | Ladění GC logů při OutOfMemoryError. |
+| **Classloading**        | Způsob, jak JVM/JBoss načítají třídy a knihovny. | Konflikt knihoven → `ClassNotFoundException`. |
+| **Security Domain / Elytron** | Konfigurace autentizace a autorizace v JBossu. | Přihlášení uživatele přes LDAP. |
+| **Logging Subsystem**   | Správa logování v JBossu. | Nastavení logů v `standalone.xml`. |
+| **JTA (Java Transaction API)** | Správa transakcí napříč DB a komponentami. | Commit/rollback více databází současně. |
+
+---
+
+
+
 
 ## LDAP
 
