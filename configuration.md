@@ -265,6 +265,30 @@ Tyto věci se nastavují v konfiguračních souborech JBossu:
 * `standalone/configuration/standalone.xml`
 * (nebo `domain/configuration/domain.xml` v domain mode).
 
+# Basic Settings (JBoss/WildFly) zakladni veci u kazde aplikace
+
+| Typ nastavení | Popis | Typické použití |
+|---------------|-------|-----------------|
+| **Datasource (JDBC)** | Připojení k databázi, definice driveru a connection URL. | Téměř každá aplikace používá DB → nastavuje se v `<datasources>` v `standalone.xml`. |
+| **JMS (Messaging)** | Fronty a topics pro messaging. | Pokud aplikace potřebuje asynchronní komunikaci nebo messaging (ActiveMQ, Artemis). |
+| **Security (uživatelé, role)** | Uživatelé a role pro aplikace (`application-users.properties`) nebo management (`mgmt-users.properties`). | Přidání loginů pro aplikace nebo admin konzoli, integrace s LDAP/Keycloak. |
+| **Deployment (nasazení aplikace)** | Nasazení `.war`, `.ear`, `.jar` do `standalone/deployments/`. | Nejjednodušší způsob, jak spustit aplikaci na serveru. |
+| **Logging** | Nastavení loggerů a úrovní logů (`INFO`, `DEBUG`, `ERROR`). | Řešení logování aplikací i serveru, úprava `<subsystem xmlns="...logging...">`. |
+| **Networking (socket-binding, konektory)** | HTTP (8080), HTTPS (8443), další porty. | Změna portů, přidání SSL certifikátu, konfigurace HTTPS konektoru. |
+
+---
+
+## Specifická nastavení
+
+| Typ nastavení | Popis | Typické použití |
+|---------------|-------|-----------------|
+| **Clustering / HA** | Nastavení pro běh více instancí serveru (Infinispan, session replication). | Produkční prostředí s vysokou dostupností. |
+| **MicroProfile** | Health checks, metrics, config API. | Cloud-native aplikace a monitoring. |
+| **Batch jobs** | Konfigurace batch subsystému. | Aplikace, které spouští dávkové úlohy. |
+| **Load balancer (mod_cluster)** | Konfigurace serveru jako load balancer. | Pokud WildFly funguje jako fronta pro další nody. |
+| **Externí služby** | Integrace s Active Directory, Keycloak, messaging brokers apod. | Enterprise integrace. |
+
+
 ---
 
 ### 4. Management konzole a CLI
@@ -290,7 +314,6 @@ JBoss má dvě hlavní cesty konfigurace:
   * **System properties** (čtené přes `System.getProperty`).
 
 ---
-
 
 
 
